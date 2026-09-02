@@ -1,1 +1,10 @@
 /home/goated/Desktop/khssna-wa7d/backend/src/main/java/ma/khssnawa7d/api/ApiApplication.java
+/home/goated/Desktop/khssna-wa7d/backend/src/main/java/ma/khssnawa7d/api/config/GlobalExceptionHandler.java
+/home/goated/Desktop/khssna-wa7d/backend/src/main/java/ma/khssnawa7d/api/config/SecurityConfig.java
+/home/goated/Desktop/khssna-wa7d/backend/src/main/java/ma/khssnawa7d/api/user/User.java
+/home/goated/Desktop/khssna-wa7d/backend/src/main/java/ma/khssnawa7d/api/user/UserController.java
+/home/goated/Desktop/khssna-wa7d/backend/src/main/java/ma/khssnawa7d/api/user/UserRepository.java
+/home/goated/Desktop/khssna-wa7d/backend/src/main/java/ma/khssnawa7d/api/user/UserService.java
+/home/goated/Desktop/khssna-wa7d/backend/src/main/java/ma/khssnawa7d/api/user/dto/ErrorResponse.java
+/home/goated/Desktop/khssna-wa7d/backend/src/main/java/ma/khssnawa7d/api/user/dto/RegisterRequest.java
+/home/goated/Desktop/khssna-wa7d/backend/src/main/java/ma/khssnawa7d/api/user/dto/UserResponse.java
