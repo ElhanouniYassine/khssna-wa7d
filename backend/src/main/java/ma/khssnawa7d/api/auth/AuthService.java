@@ -1,5 +1,6 @@
 package ma.khssnawa7d.api.auth;
 
+import ma.khssnawa7d.api.auth.dto.AuthResponse;
 import ma.khssnawa7d.api.auth.dto.LoginRequest;
 import ma.khssnawa7d.api.user.User;
 import ma.khssnawa7d.api.user.UserRepository;
@@ -13,20 +14,26 @@ import java.util.Optional;
 @Service
 public class AuthService {
     private final UserRepository userRepository;
-    public AuthService(UserRepository userRepository){
+    private final JWTService jwtService;
+
+    public AuthService(UserRepository userRepository,JWTService jwtService){
         this.userRepository=userRepository;
+        this.jwtService=jwtService;
     }
 
 
 
-    public String login(LoginRequest loginRequest){
+
+
+    public AuthResponse login(LoginRequest loginRequest){
         Optional<User> user=userRepository.findByEmail(loginRequest.getEmail());
         if(user.isPresent()){
             if(BCrypt.checkpw(loginRequest.getPassword(),user.get().getPassword())){
-                return "Auth success";
+                String token=jwtService.generateToken(user.get().getId());
+                return new AuthResponse(token);
             }
-            return "Invalid email or password";
+            throw new IllegalArgumentException("Invalid email or password");
         }
-        return "Invalid email or password";
+        throw new IllegalArgumentException("Invalid email or password");
     }
 }

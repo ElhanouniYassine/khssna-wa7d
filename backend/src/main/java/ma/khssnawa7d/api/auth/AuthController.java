@@ -1,5 +1,6 @@
 package ma.khssnawa7d.api.auth;
 
+import ma.khssnawa7d.api.auth.dto.AuthResponse;
 import ma.khssnawa7d.api.auth.dto.LoginRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +17,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@RequestBody LoginRequest loginRequest){
+    public AuthResponse loginUser(@RequestBody LoginRequest loginRequest){
         return authService.login(loginRequest);
     }
 

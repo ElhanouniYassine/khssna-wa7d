@@ -2,6 +2,7 @@
 /home/goated/Desktop/khssna-wa7d/backend/src/main/java/ma/khssnawa7d/api/auth/AuthController.java
 /home/goated/Desktop/khssna-wa7d/backend/src/main/java/ma/khssnawa7d/api/auth/AuthService.java
 /home/goated/Desktop/khssna-wa7d/backend/src/main/java/ma/khssnawa7d/api/auth/JWTService.java
+/home/goated/Desktop/khssna-wa7d/backend/src/main/java/ma/khssnawa7d/api/auth/dto/AuthResponse.java
 /home/goated/Desktop/khssna-wa7d/backend/src/main/java/ma/khssnawa7d/api/auth/dto/LoginRequest.java
 /home/goated/Desktop/khssna-wa7d/backend/src/main/java/ma/khssnawa7d/api/config/GlobalExceptionHandler.java
 /home/goated/Desktop/khssna-wa7d/backend/src/main/java/ma/khssnawa7d/api/config/SecurityConfig.java

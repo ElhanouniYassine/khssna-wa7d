@@ -1,3 +1,5 @@
+import { login } from "@/services/api/auth";
+import { getToken, saveToken } from "@/services/storage/authStorage";
 import { Link } from "expo-router";
 import { useState } from "react";
 import {
@@ -19,13 +21,17 @@ export default function RegisterScreen() {
   const [password, setPassword] = useState("");
   const [city, setCity] = useState("");
 
-  const handleRegister = () => {
-    console.log("Registering with:", {
-      name,
-      email,
-      password,
-      city,
-    });
+  const handleLogin = async () => {
+    try{
+        const response= await login(email,password);
+        // return response;
+        await saveToken(response.token)
+        const respons=await getToken();
+        console.log("token retrieved",respons);
+        console.log(response);
+    }catch(error){
+        console.log(error);
+    }
   };
 
   return (
@@ -76,7 +82,7 @@ export default function RegisterScreen() {
 
               <TouchableOpacity
                 style={styles.button}
-                onPress={handleRegister}
+                onPress={handleLogin}
               >
                 <Text style={styles.buttonText}>
                   Log in
