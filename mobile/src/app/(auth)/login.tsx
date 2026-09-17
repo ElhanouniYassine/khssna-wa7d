@@ -1,36 +1,50 @@
+import { useSession } from "@/context/SessionContext";
 import { login } from "@/services/api/auth";
-import { getToken, saveToken } from "@/services/storage/authStorage";
 import { Link } from "expo-router";
 import { useState } from "react";
 import {
-    Keyboard,
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
-    View,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function RegisterScreen() {
-  const [name, setName] = useState("");
+export default function LoginScreen() {
+  const { signIn } = useSession();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [city, setCity] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleLogin = async () => {
-    try{
-        const response= await login(email,password);
-        // return response;
-        await saveToken(response.token)
-        const respons=await getToken();
-        console.log("token retrieved",respons);
-        console.log(response);
-    }catch(error){
-        console.log(error);
+    if (loading) {
+      return;
+    }
+
+    if (!email.trim() || !password) {
+      setError("Email and password are required.");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await login(email.trim(), password);
+
+      await signIn(response.token);
+    } catch {
+      setError("Invalid email or password.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,15 +58,10 @@ export default function RegisterScreen() {
           <View style={styles.container}>
             <View style={styles.headerContainer}>
               <Text style={styles.title}>Log in</Text>
-
-              <Text style={styles.subtitle}>
-                Join Khssna Wa7d
-              </Text>
+              <Text style={styles.subtitle}>Welcome back to Khssna Wa7d</Text>
             </View>
 
             <View style={styles.formContainer}>
-              
-
               <Text style={styles.label}>Email</Text>
 
               <TextInput
@@ -64,6 +73,7 @@ export default function RegisterScreen() {
                 autoCorrect={false}
                 value={email}
                 onChangeText={setEmail}
+                editable={!loading}
               />
 
               <Text style={styles.label}>Password</Text>
@@ -76,25 +86,25 @@ export default function RegisterScreen() {
                 autoCapitalize="none"
                 value={password}
                 onChangeText={setPassword}
+                editable={!loading}
               />
 
-              
+              {error && <Text style={styles.errorText}>{error}</Text>}
 
               <TouchableOpacity
-                style={styles.button}
+                style={[styles.button, loading && styles.buttonDisabled]}
                 onPress={handleLogin}
+                disabled={loading}
               >
                 <Text style={styles.buttonText}>
-                  Log in
+                  {loading ? "Logging in..." : "Log in"}
                 </Text>
               </TouchableOpacity>
 
-              <View style={styles.loginContainer}>
-                <Text style={styles.loginText}>
-                  Don't have an account?{" "}
-                </Text>
+              <View style={styles.footerContainer}>
+                <Text style={styles.footerText}>Don't have an account? </Text>
 
-                <Link href="/register" style={styles.loginLink}>
+                <Link href="/(auth)/register" style={styles.footerLink}>
                   Create Account
                 </Link>
               </View>
@@ -161,6 +171,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#f9fafb",
   },
 
+  errorText: {
+    color: "#dc2626",
+    fontSize: 14,
+    marginBottom: 12,
+  },
+
   button: {
     height: 50,
     backgroundColor: "#2563eb",
@@ -170,24 +186,28 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
 
+  buttonDisabled: {
+    opacity: 0.6,
+  },
+
   buttonText: {
     color: "#ffffff",
     fontSize: 16,
     fontWeight: "600",
   },
 
-  loginContainer: {
+  footerContainer: {
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 20,
   },
 
-  loginText: {
+  footerText: {
     fontSize: 14,
     color: "#6b7280",
   },
 
-  loginLink: {
+  footerLink: {
     fontSize: 14,
     fontWeight: "600",
     color: "#2563eb",

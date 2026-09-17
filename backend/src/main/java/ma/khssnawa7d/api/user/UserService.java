@@ -40,4 +40,16 @@ public class UserService {
         finalUser.setName(savedUser.getName());
         return finalUser;
     }
+    public UserResponse getUserById(Long userId) {
+
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        UserResponse response = new UserResponse();
+        response.setName(user.getName());
+        response.setEmail(user.getEmail());
+        response.setCity(user.getCity());
+
+        return response;
+    }
 }

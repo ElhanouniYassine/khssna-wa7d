@@ -1,22 +1,11 @@
-import { Stack } from 'expo-router';
-import { useColorScheme } from 'react-native';
+import { Stack } from "expo-router";
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
+export default function AppLayout() {
   return (
-      <Stack>
-            <Stack.Screen
-                name='index'
-                options={{
-                    title:"Home",
-                }}/>
-            <Stack.Screen
-                name='profile'
-                options={{
-                    title:"Profile"
-                }}/>
+    <Stack>
+      <Stack.Screen name="index" options={{ title: "Home" }} />
 
-      </Stack>
+      <Stack.Screen name="profile" options={{ title: "Profile" }} />
+    </Stack>
   );
 }
