@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ma.khssnawa7d.api.activity.Activity;
 
 @Getter
 @Setter
